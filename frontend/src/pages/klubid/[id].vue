@@ -31,7 +31,32 @@
           <v-divider :thickness="3"></v-divider>
         </v-col>
       </v-row>
+      <v-col cols="12" md="6">
+        <h2>TOP mängijad</h2>
+        <v-row>
+          <v-col cols="10" v-for="(player) in topPlayers" :key="index">
+            <v-card>
+              <v-card-title>
+                <v-row align="center">
+                  <v-col cols="8">
 
+                    {{ player.name }}
+                  </v-col>
+                  <v-col cols="4" class="text-right points">
+                    {{ player.ranking }}
+                  </v-col>
+                </v-row>
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-col>
+
+      <v-row cols="12" md="8">
+        <v-col>
+          <v-divider :thickness="3"></v-divider>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="12" md="6" lg="4">
           <ModifyClubForm
@@ -68,6 +93,7 @@
 
 <script>
 import {fetchClubById} from "@/wrapper/clubsApiWrapper.js";
+import {fetchTopClubPlayers} from "@/wrapper/playersApiWrapper.js";
 import PlayersSearchTable from "@/components/clubs/PlayersSearchTable.vue";
 import AddClubDialog from "@/components/clubs/AddClubDialog.vue";
 import ModifyClubForm from "@/components/clubs/ModifyClubForm.vue";
@@ -84,19 +110,21 @@ export default {
       club: null,
       clubId: null,
       showModifyClubDialog: false,
+      topPlayers: [],
     }
   },
   created() {
     this.clubId = this.$route.params.id;
     this.$watch(
       () => this.$route.params.id,
-      this.fetchClubData,
+      this.fetchData,
       {immediate: true}
     )
   },
   methods: {
-    async fetchClubData() {
+    async fetchData() {
       this.club = await fetchClubById(this.clubId)
+      this.topPlayers = await fetchTopClubPlayers(this.club.name)
     },
     openModifyClubDialog() {
       this.showModifyClubDialog = true;

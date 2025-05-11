@@ -1,7 +1,7 @@
 /* eslint-env node */
 const express = require('express');
 const cors = require('cors')
-const {getAllPlayers, getPlayerById, getPlayersByClubId, getPlayerStatistics, addPlayer, getTopPlayers, deletePlayer} = require("./service/playersService");
+const {getAllPlayers, getPlayerById, getPlayersByClubId, getPlayerStatistics, addPlayer, getTopPlayers, deletePlayer,getTopClubPlayers} = require("./service/playersService");
 const {getAllClubs, getClubById, addClub, getTopClubs, deleteClub} = require("./service/clubsService");
 const {getAllTournaments, getTournamentById, addTournament, getOngoingTournaments, deleteTournament} = require("./service/tournamentsService");
 const {getMatchByTournamentId, addMatchToTournament, getOngoingMatches, getMatchById} = require("./service/matchesService");
@@ -27,6 +27,7 @@ app.delete("/api/players/:playerId", deletePlayer)
 
 app.get("/api/clubs", getAllClubs)
 app.get("/api/clubs/:id", getClubById)
+app.get("/api/clubtopplayers/:club", getTopClubPlayers)
 app.get("/api/clubs/top/:limit", getTopClubs)
 app.post("/api/clubs", addClub)
 app.delete("/api/clubs/:clubId", deleteClub)

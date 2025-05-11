@@ -45,6 +45,14 @@ export async function fetchTopPlayers(limit) {
     console.error('Error fetching top players', error);
   }
 }
+export async function fetchTopClubPlayers(club) {
+  try {
+    const response = await apiClient.get(`/clubtopplayers/${club}`);
+    return mapTopPlayersData(response.data);
+  } catch (error) {
+    console.error('Error fetching top club players', error);
+  }
+}
 
 export async function addPlayer(player) {
   try {
@@ -66,6 +74,18 @@ function mapPlayersData(players) {
   return players.map(player => {
     return mapPlayerData(player)
   })
+}
+function mapTopPlayersData(players) {
+  return players.map(player => {
+    return mapTopPlayerData(player)
+  })
+}
+
+function mapTopPlayerData(player) {
+  return {
+    name: player.isik,
+    ranking: player.punktisumma,
+  }
 }
 
 function mapPlayerData(player) {

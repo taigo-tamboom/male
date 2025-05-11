@@ -268,6 +268,9 @@ const SELECT_TOP_CLUBS = `
     ORDER BY average_rating DESC
     LIMIT $1
 `;
+const SELECT_TOP_CLUB_PLAYERS = `
+    select * from f_klubiparimad($1);
+`;
 
 function getAddOrUpdateClubQuery(isUpdate) {
     if (isUpdate) {
@@ -314,6 +317,7 @@ module.exports = {
     SELECT_ALL_CLUBS,
     SELECT_CLUB_BY_ID,
     SELECT_TOP_CLUBS,
+    SELECT_TOP_CLUB_PLAYERS,
     getAddOrUpdateClubQuery,
     DELETE_CLUB,
 };
